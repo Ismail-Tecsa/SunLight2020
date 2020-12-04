@@ -1,0 +1,10 @@
+{
+    "äl.enableCodeAnalysis": true,
+    "al.codeAnalysers": [
+        "${CodeCop",
+        "${PerTenantExtensionCop}",
+        "${UICop}"
+    ],
+    "äl.ruleSetPath": "./.codeAnalysis/sunlight.ruleset.json",
+    "editor.formatOnSave": true
+}

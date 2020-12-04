@@ -1,0 +1,24 @@
+{
+    "name": "Sunlight",
+    "description": "These rules must be respected by all the AL code written with the company",
+    "generalAction": "Hidden",
+    "rules": [
+        {
+            "id": "AL0561",
+            "action": "None",
+            "justification": "Ignored" 
+        },
+        {
+            "id": "AL0432",
+            "action": "None",
+            "justification": "Ignored" 
+        },
+        {
+            "id": "AL0667",
+            "action": "None",
+            "justification": "Ignored" 
+        }
+  
+
+    ]
+}
