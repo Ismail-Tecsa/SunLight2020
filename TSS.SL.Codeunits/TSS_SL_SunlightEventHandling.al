@@ -112,4 +112,12 @@ codeunit 50000 "Sunlight Event Handling"
         bookentry.setrange("Contract No.", ServiceContractHeader."Contract No.");
         bookentry.DeleteAll();
     end;
+    //TSA_ISMAIL Expiration date
+    [EventSubscriber(ObjectType::Table, 5628, 'OnAfterValidateEvent', 'Effective Date', false, False)]
+    local procedure "OnAfterValidateEffectiveDate"(var Rec: Record Insurance)
+    var
+    Begin
+        Rec."Expiration Date" := CalcDate('1Y', Rec."effective Date")
+    End;
+    //TSA_ISMAIL Expiration date
 }
