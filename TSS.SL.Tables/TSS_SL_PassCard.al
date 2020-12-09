@@ -43,5 +43,4 @@ table 50031 "Pass Card"
             Clustered = true;
         }
     }
-
 }

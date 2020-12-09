@@ -16,7 +16,7 @@ table 50004 "Driver Referees"
         }
         field(3; "Referee Type"; Option)
         {
-            OptionMembers = "Spouse","Mother","Father","Relative","Other";
+            OptionMembers = "Spouse","Mother","Father","Siblings","Relative","Introducer","Guarantor","Other"; //TSA_ISMAIL Added two ore options
             Caption = 'Referee Type';
             DataClassification = CustomerContent;
         }
@@ -35,5 +35,4 @@ table 50004 "Driver Referees"
             Clustered = true;
         }
     }
-
 }

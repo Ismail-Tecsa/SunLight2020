@@ -1,6 +1,5 @@
 page 50045 "Pass Card List"
 {
-
     ApplicationArea = All;
     Caption = 'Pass Card List';
     PageType = List;
@@ -37,5 +36,4 @@ page 50045 "Pass Card List"
             }
         }
     }
-
 }

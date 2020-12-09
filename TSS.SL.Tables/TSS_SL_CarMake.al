@@ -1,28 +1,27 @@
 table 50012 "Car Make"
 {
-    Caption = 'Car Make';
-    DataClassification = ToBeClassified;
-    LookupPageId = "Car Make";
+  Caption = 'Car Make';
+  DataClassification = ToBeClassified;
+  LookupPageId = "Car Make";
 
-    fields
+  fields
+  {
+    field(1;Code;Code[20])
     {
-        field(1; Code; Code[20])
-        {
-            Caption = 'Code';
-            DataClassification = CustomerContent;
-        }
-        field(2; Description; Text[50])
-        {
-            Caption = 'Description';
-            DataClassification = CustomerContent;
-        }
+      Caption = 'Code';
+      DataClassification = CustomerContent;
     }
-    keys
+    field(2;Description;Text[50])
     {
-        key(PK; Code)
-        {
-            Clustered = true;
-        }
+      Caption = 'Description';
+      DataClassification = CustomerContent;
     }
-
+  }
+  keys
+  {
+    key(PK;Code)
+    {
+      Clustered = true;
+    }
+  }
 }

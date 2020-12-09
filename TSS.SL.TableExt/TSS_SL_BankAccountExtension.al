@@ -7,7 +7,6 @@ tableextension 50007 "Bank Account Extension" extends "Bank Account"
             Caption = 'Transaction Type';
             DataClassification = CustomerContent;
             TableRelation = "SunCab Bank Setup";
-            //TSA_ISMAIL
         }
     }
 }

@@ -1,50 +1,45 @@
 page 50009 "System Utilities"
 {
+  ApplicationArea = All;
+  Caption = 'System Utilities';
+  PromotedActionCategories = 'Processing';
+  PageType = List;
+  SourceTable = "User Setup";
+  UsageCategory = Administration;
 
-    ApplicationArea = All;
-    Caption = 'System Utilities';
-    PromotedActionCategories = 'Processing';
-    PageType = List;
-    SourceTable = "User Setup";
-    UsageCategory = Administration;
-    layout
+  layout
+  {
+    area(content)
     {
-        area(content)
+      repeater(General)
+      {
+        field("User ID";Rec."User ID")
         {
-            repeater(General)
-            {
-                field("User ID"; Rec."User ID")
-                {
-                    ApplicationArea = All;
-                }
-            }
+          ApplicationArea = All;
         }
+      }
     }
-
-    actions
+  }
+  actions
+  {
+    area(Processing)
     {
-        area(Processing)
-        {
-            action("Delete Referees")
-            {
-                ApplicationArea = Service;
-                Caption = 'Delete Referees';
+      action("Delete Referees")
+      {
+        ApplicationArea = Service;
+        Caption = 'Delete Referees';
 
-                trigger OnAction()
-                var
-                    referee: record "Driver Referees";
-                begin
-                    referee.deleteall;
-                end;
-            }
-            action("Driver Referee")
-            {
-                ApplicationArea = Service;
-                Caption = 'Driver Referee';
-                RunObject = page "Driver Referee";
-            }
-
-        }
+        trigger OnAction()var referee: record "Driver Referees";
+        begin
+          referee.deleteall;
+        end;
+      }
+      action("Driver Referee")
+      {
+        ApplicationArea = Service;
+        Caption = 'Driver Referee';
+        RunObject = page "Driver Referee";
+      }
     }
-
+  }
 }

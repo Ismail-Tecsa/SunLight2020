@@ -1,15 +1,13 @@
 pageextension 50011 "Service Cont. Subf. Extension" extends "Service Contract Subform"
 {
-    layout
+  layout
+  {
+    addafter("Service Item No.")
     {
-
-        addafter("Service Item No.")
-        {
-            field("Taxi ID"; "Taxi ID")
-            {
-                ApplicationArea = all;
-            }
-
-        }
+      field("Taxi ID";"Taxi ID")
+      {
+        ApplicationArea = all;
+      }
     }
+  }
 }

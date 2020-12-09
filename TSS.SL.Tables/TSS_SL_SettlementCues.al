@@ -1,44 +1,42 @@
 table 50033 "Settlement Cues"
 {
-    Caption = 'Settlement Cues';
-    DataClassification = ToBeClassified;
+  Caption = 'Settlement Cues';
+  DataClassification = ToBeClassified;
 
-    fields
+  fields
+  {
+    field(1;"Primary Key";text[30])
     {
-        field(1; "Primary Key"; text[30])
-        {
-            Caption = 'Primary Key';
-            DataClassification = ToBeClassified;
-        }
-        field(2; Open; Integer)
-        {
-            Caption = 'Open';
-
-            FieldClass = FlowField;
-            Editable = false;
-            CalcFormula = count("Settlement Header" where("Status" = filter("In Progress")));
-        }
-        field(3; "Pending Approval"; Integer)
-        {
-            Caption = 'Pending Approval';
-            FieldClass = FlowField;
-            Editable = false;
-            CalcFormula = count("Settlement Header" where("Status" = filter("Pending Approval")));
-        }
-        field(4; "Pending Payment"; Integer)
-        {
-            Caption = 'Pending Payment';
-            FieldClass = FlowField;
-            Editable = false;
-            CalcFormula = count("Settlement Header" where("Status" = filter("Pending Payment")));
-        }
+      Caption = 'Primary Key';
+      DataClassification = ToBeClassified;
     }
-    keys
+    field(2;Open;Integer)
     {
-        key(PK; "Primary Key")
-        {
-            Clustered = true;
-        }
+      Caption = 'Open';
+      FieldClass = FlowField;
+      Editable = false;
+      CalcFormula = count("Settlement Header" where("Status"=filter("In Progress")));
     }
-
+    field(3;"Pending Approval";Integer)
+    {
+      Caption = 'Pending Approval';
+      FieldClass = FlowField;
+      Editable = false;
+      CalcFormula = count("Settlement Header" where("Status"=filter("Pending Approval")));
+    }
+    field(4;"Pending Payment";Integer)
+    {
+      Caption = 'Pending Payment';
+      FieldClass = FlowField;
+      Editable = false;
+      CalcFormula = count("Settlement Header" where("Status"=filter("Pending Payment")));
+    }
+  }
+  keys
+  {
+    key(PK;"Primary Key")
+    {
+      Clustered = true;
+    }
+  }
 }

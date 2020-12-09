@@ -7,7 +7,6 @@ pageextension 50008 "Gen. Journal Extension" extends "General Journal"
             field("Insurance Policy"; "Insurance Policy")
             {
                 ApplicationArea = all;
-
             }
 
             field("Taxi No."; "Taxi No.")
@@ -20,6 +19,15 @@ pageextension 50008 "Gen. Journal Extension" extends "General Journal"
                 ApplicationArea = all;
             }
             field("Contract No."; "Contract No.")
+            {
+                ApplicationArea = all;
+            }
+            field("Insurance Vendor No."; "Insurance Vendor No.")
+            {
+                ApplicationArea = all;
+                Visible = false; //TSA_ISMAIl added Incurance vendor No 
+            }
+            field("Annual Premium"; "Annual Premium")
             {
                 ApplicationArea = all;
             }

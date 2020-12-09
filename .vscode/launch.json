@@ -10,7 +10,7 @@
             "authentication": "Windows",
             "startupObjectId": 50005,
             "startupObjectType": "Page",
-            "schemaUpdateMode": "Synchronize",
+            "schemaUpdateMode": "ForceSync",
             "breakOnError": true,
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,

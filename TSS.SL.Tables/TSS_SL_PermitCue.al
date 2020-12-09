@@ -16,18 +16,14 @@ table 50008 "Permit Cue"
             Caption = 'Active Permits';
             FieldClass = FlowField;
             Editable = false;
-            CalcFormula = count(Permit where("Permit Status" = filter(Active),
-                                             "Permit Company" = field("Primary Key")));
-
+            CalcFormula = count(Permit where("Permit Status" = filter(Active), "Permit Company" = field("Primary Key")));
         }
         field(3; "New Permits"; Integer)
         {
             Caption = 'New Permits';
             FieldClass = FlowField;
             Editable = false;
-            CalcFormula = count(Permit where("Permit Status" = filter("In-Active"),
-                                            "Permit Condition" = filter(New),
-                                            "Permit Company" = field("Primary Key")));
+            CalcFormula = count(Permit where("Permit Status" = filter("In-Active"), "Permit Condition" = filter(New), "Permit Company" = field("Primary Key")));
         }
         field(4; "Total Permits"; Integer)
         {
@@ -41,34 +37,28 @@ table 50008 "Permit Cue"
             Caption = 'PG10 Permits';
             FieldClass = FlowField;
             Editable = false;
-            CalcFormula = count(Permit where("Permit Condition" = filter(PG10),
-                                              "Permit Company" = field("Primary Key")));
+            CalcFormula = count(Permit where("Permit Condition" = filter(PG10), "Permit Company" = field("Primary Key")));
         }
         field(6; "SK-Used Permits"; Integer)
         {
             Caption = 'SK-Used Permits';
             FieldClass = FlowField;
             Editable = false;
-            CalcFormula = count(Permit where("Permit Condition" = filter("SK-Used"),
-                                              "Permit Company" = field("Primary Key")));
-
+            CalcFormula = count(Permit where("Permit Condition" = filter("SK-Used"), "Permit Company" = field("Primary Key")));
         }
-
         field(20; "Date Filter"; Date)
         {
             Caption = 'Date Filter';
             Editable = false;
             FieldClass = FlowFilter;
         }
-
         field(21; "Permits Expiring"; Integer)
         {
             Caption = 'Permits Expiring';
             FieldClass = FlowField;
             Editable = false;
-            CalcFormula = count(Permit where(//"Permit End Date" = filter("Date Filter"),
-                                              "Permit Company" = field("Primary Key")));
-
+            CalcFormula = count(Permit where( //"Permit End Date" = filter("Date Filter"),
+      "Permit Company" = field("Primary Key")));
         }
     }
     keys
@@ -78,5 +68,4 @@ table 50008 "Permit Cue"
             Clustered = true;
         }
     }
-
 }

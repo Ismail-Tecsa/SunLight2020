@@ -2,19 +2,27 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
 {
     fields
     {
-
+        //TSA_ISMAIL Modified No as Policy No
+        modify("No.")
+        {
+            Caption = 'Policy No.';
+        }
+        //TSA_ISMAIL Modified Policy No as Policy New No.
+        modify("Policy No.")
+        {
+            Caption = 'Policy new No.';
+        }
         field(50000; "Type of Coverage"; Option)
         {
             Caption = 'Type of Coverage';
             OptionMembers = "Motor","Non-Motor";
             DataClassification = CustomerContent;
         }
-
         field(50001; "Policy Holder"; Text[30])
         {
             //permit company
             Caption = 'Policy Holder';
-            TableRelation = Vendor;
+            TableRelation = Company; //TSA_ISMAIL Modified tablerelation for policy holder
             DataClassification = CustomerContent;
         }
         field(50002; "Taxi No."; Code[10])
@@ -22,8 +30,8 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
             Caption = 'Taxi No.';
             TableRelation = Taxis;
             DataClassification = CustomerContent;
-            trigger OnValidate()
 
+            trigger OnValidate()
             var
                 driver: record customer;
                 taxi: record taxis;
@@ -44,7 +52,6 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
             TableRelation = customer;
             DataClassification = CustomerContent;
         }
-
         field(50016; "Start Date"; Date)
         {
             Caption = 'Start Date';

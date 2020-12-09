@@ -1,22 +1,10 @@
 pageextension 50000 "Customer Card Extension" extends "Customer Card"
 {
-    // USER DRIVER CARD!
-    layout
+  layout
+  {
+    addafter("No.")
     {
-        addafter("No.")
-        {
-
-        }
-
-
     }
-
-    actions
-    {
-        // Add changes to page actions here
-    }
-
-
-    var
-
+  }
+  var
 }

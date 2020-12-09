@@ -38,6 +38,18 @@ page 50008 "Referee Subform"
                     ApplicationArea = RelationshipMgmt;
                     Editable = false;
                 }
+                //TSA_ISMAIL Added Contact Mobile No field
+                field("Mobile No"; ContactMobileNo)
+                {
+                    ApplicationArea = RelationshipMgmt;
+                    Editable = false;
+                }
+                //TSA_ISMAIL Added Contact Relationship field
+                field("RelationShip"; ContactRelative)
+                {
+                    ApplicationArea = RelationshipMgmt;
+                    Editable = false;
+                }
 
             }
         }
@@ -53,11 +65,14 @@ page 50008 "Referee Subform"
     begin
         if not contact.get("Contact No.") then clear(contact);
         ContactName := contact.Name;
+        ContactMobileNo := Contact."Mobile Phone No.";//TSA_ISMAIL Added Contact Mobile No
+        ContactRelative := Contact.Relationship;
     end;
 
     var
 
         ContactName: Text[50];
+        ContactRelative: Text[50];
+        ContactMobileNo: Text[30];
         Contact: record Contact;
 }
-

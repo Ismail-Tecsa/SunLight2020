@@ -7,8 +7,8 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
             Caption = 'Contract No.';
             DataClassification = ToBeClassified;
             TableRelation = "Service Contract Header";
-
-            trigger OnValidate()
+            //TSA_ISMAIL diaabled code
+            /*trigger OnValidate()
 
             var
                 SCH: record "Service Contract Header";
@@ -22,7 +22,8 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
                     if scl.findfirst then
                         "Taxi No." := scl."Service Item No.";
                 end;
-            end;
+            end;*/
+            //TSA_ISMAIL diaabled code
         }
         field(50001; "Taxi No."; Code[20])
         {
@@ -40,7 +41,7 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
         {
             Caption = 'Driver No.';
             DataClassification = ToBeClassified;
-            //TableRelation = customer;
+            TableRelation = customer;
         }
         field(50004; "Taxi Company"; Text[30])
         {
@@ -53,27 +54,42 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
             Caption = 'Insurance Policy';
             DataClassification = ToBeClassified;
             TableRelation = Insurance;
+            //Tsa_ISMAIL Modified code
             trigger OnValidate()
             var
                 Insurance: Record 5628;
                 Taxi: Code[20];
             Begin
-                If Insurance.Get("Insurance No.", "Insurance No.") then Begin
-                    //  Message('%1', Insurance."No.");
-                    "Taxi No." := Insurance."Taxi No.";
-                    //Message('%1', Taxi);
+                Insurance.Reset();
+                If Insurance.Get("Insurance Policy") then begin
                     "Driver No." := Insurance."Driver No.";
-                End;
+                    "Taxi No." := Insurance."Taxi No.";
+                    "Annual Premium" := Insurance."Annual Premium";
+                    "Insurance Vendor No." := Insurance."Insurance Vendor No.";
+                end;
             End;
+            //Tsa_ISMAIL Modified code 
         }
         field(50006; "Days"; Integer)
         {
             trigger OnValidate()
             begin
-
             end;
         }
-
+        //TSA_ISMAIL added field
+        field(50007; "Annual Premium"; Decimal)
+        {
+            Caption = 'Annual Premium';
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor."No.";
+        }
+        field(50008; "Insurance Vendor No."; Code[20])
+        {
+            Caption = 'Insurance Vendor No.';
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor;
+        }
+        //Tsa_Ismail Added field
         modify("Account No.")
         {
             trigger OnAfterValidate()
@@ -82,8 +98,6 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
             end;
         }
     }
-
     var
         SunLightMgmt: Codeunit "SunCab Journal Management";
-
 }

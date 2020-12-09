@@ -1,30 +1,28 @@
 page 50041 "Settlement Code List"
 {
+  ApplicationArea = All;
+  Caption = 'Settlement Code List';
+  PageType = List;
+  SourceTable = "Settlement Code";
+  UsageCategory = Lists;
+  Editable = true;
+  PromotedActionCategories = 'New,Process';
 
-    ApplicationArea = All;
-    Caption = 'Settlement Code List';
-    PageType = List;
-    SourceTable = "Settlement Code";
-    UsageCategory = Lists;
-    Editable = true;
-    PromotedActionCategories = 'New,Process';
-
-    layout
+  layout
+  {
+    area(content)
     {
-        area(content)
+      repeater(General)
+      {
+        field(Code;Rec.Code)
         {
-            repeater(General)
-            {
-                field(Code; Rec.Code)
-                {
-                    ApplicationArea = All;
-                }
-                field(Description; Rec.Description)
-                {
-                    ApplicationArea = All;
-                }
-            }
+          ApplicationArea = All;
         }
+        field(Description;Rec.Description)
+        {
+          ApplicationArea = All;
+        }
+      }
     }
-
+  }
 }

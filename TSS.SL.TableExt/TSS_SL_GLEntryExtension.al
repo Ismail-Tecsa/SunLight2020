@@ -2,13 +2,11 @@ tableextension 50005 "G/LEntry Extension" extends "G/L Entry"
 {
     fields
     {
-
         field(50000; "Contract No."; Code[20])
         {
             Caption = 'Contract No.';
             DataClassification = ToBeClassified;
             TableRelation = "Service Contract Header";
-
         }
         field(50001; "Taxi No."; Code[20])
         {
@@ -38,5 +36,13 @@ tableextension 50005 "G/LEntry Extension" extends "G/L Entry"
             DataClassification = ToBeClassified;
             TableRelation = Insurance;
         }
+        //TSA_ISAMIL added field
+        field(50006; "Insurance Vendor No."; Code[20])
+        {
+            Caption = 'Insurance Vendor No.';
+            DataClassification = ToBeClassified;
+            TableRelation = Vendor;
+        }
+        //TSA_ISAMIL added field
     }
 }

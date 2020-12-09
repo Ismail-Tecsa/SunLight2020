@@ -2,7 +2,12 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
 {
     layout
     {
-        //TSA_ISMAIL
+        //TSA_ISMAIL Modified Policy No 
+        modify("Policy No.")
+        {
+            Visible = false;
+        }
+        //TSA_ISMAIL_ modified Excess Amount position
         addafter("Last Date Modified")
         {
             field("Excess Amount"; "Excess Amount")
@@ -11,7 +16,7 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
                 Visible = true;
             }
         }
-        //TSA_ISMAIL
+        //TSA_ISMAIL_ modified Excess Amount position
         addafter("Annual Premium")
         {
             field("Annual Premium Paid"; Rec."Annual Premium Paid")
@@ -37,10 +42,8 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
                 ApplicationArea = All;
 
                 trigger OnValidate()
-
                 begin
-                    if not PolicyHolder.get("Policy Holder") then
-                        clear(PolicyHolder);
+                    if not PolicyHolder.get("Policy Holder") then clear(PolicyHolder);
                 end;
             }
             field("Policy Holder Name"; PolicyHolder.name)
@@ -49,7 +52,6 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
                 Editable = false;
             }
         }
-
         addafter("Insurance Vendor No.")
         {
             field("Insurer Name"; Insurer.name)
@@ -58,7 +60,6 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
                 Editable = false;
             }
         }
-
         addafter("Insurance Type")
         {
             field("Taxi No.24947"; "Taxi No.")
@@ -71,17 +72,16 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
             }
         }
         /*         addafter("Policy No.")
-                {
-                    field("Start Date99794"; "Start Date")
                     {
-                        ApplicationArea = All;
-                    }
-                    field("Expiry Date53356"; "Expiry Date")
-                    {
-                        ApplicationArea = All;
-                    }
-                } */
-
+                        field("Start Date99794"; "Start Date")
+                        {
+                            ApplicationArea = All;
+                        }
+                        field("Expiry Date53356"; "Expiry Date")
+                        {
+                            ApplicationArea = All;
+                        }
+                    } */
         addlast(Posting)
         {
             //      group(Cancellation)
@@ -125,11 +125,10 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
             field("Excess Amount65314"; "Excess Amount")
             {
                 ApplicationArea = All;
-                Visible = false; //TSA_ISMAIL
+                Visible = false; //TSA_ISMAIL_ modified Visibelity for Excess Amount
             }
             //    }
         }
-
         addlast(factboxes)
         {
             part("Driver Details"; "Driver Details FactBox")
@@ -141,25 +140,20 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
             {
                 ApplicationArea = all;
                 SubPageLink = "Taxi ID" = field("Taxi No.");
-
             }
             part("Attached Documents"; "Sunlight Attachments Factbox")
             {
                 ApplicationArea = All;
                 Caption = 'Attachments';
-                SubPageLink = "Table ID" = CONST(5628),
-                               "No." = FIELD("No.");
+                SubPageLink = "Table ID" = CONST(5628), "No." = FIELD("No.");
             }
         }
         modify("Insurance Vendor No.")
         {
             trigger OnAfterValidate()
-
             begin
-                if not Insurer.get("Insurance Vendor No.") then
-                    clear(Insurer);
+                if not Insurer.get("Insurance Vendor No.") then clear(Insurer);
             end;
-
         }
     }
     var
@@ -167,11 +161,8 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
         Insurer: record Vendor;
 
     trigger OnAfterGetRecord()
-
     begin
-        if not PolicyHolder.get("Policy Holder") then
-            clear(PolicyHolder);
-        if not Insurer.get("Insurance Vendor No.") then
-            clear(Insurer);
+        if not PolicyHolder.get("Policy Holder") then clear(PolicyHolder);
+        if not Insurer.get("Insurance Vendor No.") then clear(Insurer);
     end;
 }

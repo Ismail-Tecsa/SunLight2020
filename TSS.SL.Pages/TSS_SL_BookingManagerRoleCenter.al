@@ -35,14 +35,13 @@ page 50005 "Booking Manager Role Center"
                 ApplicationArea = Advanced;
             }
         }
-
     }
-
     actions
     {
         area(Embedding)
         {
             ToolTip = 'Manage Drivers, Processes, Bookings etc.';
+
             action("Case Management")
             {
                 ApplicationArea = All;
@@ -104,11 +103,19 @@ page 50005 "Booking Manager Role Center"
                 Caption = 'Insurance';
                 RunObject = page "Insurance List";
             }
-
         }
-
         area(Creation)
         {
+            action(Collection)
+            {
+                ApplicationArea = all;
+                Caption = 'Collection';
+                Image = CashReceiptJournal;
+                Promoted = false;
+                RunObject = Page "Collections";
+                RunPageMode = Create;
+                ToolTip = 'Make a new collection payment.';
+            }
             action(Driver)
             {
                 ApplicationArea = Basic, Suite;
@@ -160,12 +167,12 @@ page 50005 "Booking Manager Role Center"
                 ToolTip = 'Create new settlement.';
             }
         }
-
         area(Sections)
         {
             group("Group")
             {
                 Caption = 'Sunlight Functions';
+
                 action("Taxis3")
                 {
                     ApplicationArea = All;
@@ -173,21 +180,21 @@ page 50005 "Booking Manager Role Center"
                     RunObject = page "Taxi List";
                 }
                 /*
-                action("Items")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Items';
-                    RunObject = page "Item List";
-                }
-                */
+                        action("Items")
+                        {
+                            ApplicationArea = All;
+                            Caption = 'Items';
+                            RunObject = page "Item List";
+                        }
+                        */
                 /*             action("Contacts")
-                               {
-                                   ApplicationArea = All;
-                                   Caption = 'Contacts';
-                                   RunObject = page "Contact List";
+                                       {
+                                           ApplicationArea = All;
+                                           Caption = 'Contacts';
+                                           RunObject = page "Contact List";
 
-                               }
-               */
+                                       }
+                       */
                 action("Customers")
                 {
                     ApplicationArea = All;
@@ -213,17 +220,17 @@ page 50005 "Booking Manager Role Center"
                     RunObject = page "Package Scheme List";
                 }
                 /*       action("Credit Memos")
-                       {
-                           ApplicationArea = All;
-                           Caption = 'Service Credit Memos';
-                           RunObject = page "Service Credit Memos";
-                       }*/
+                               {
+                                   ApplicationArea = All;
+                                   Caption = 'Service Credit Memos';
+                                   RunObject = page "Service Credit Memos";
+                               }*/
                 /*       action("Create Contract Orders")
-                       {
-                           ApplicationArea = All;
-                           Caption = 'Create Contract Service Orders';
-                           RunObject = report "Create Contract Service Orders";
-                       }*/
+                               {
+                                   ApplicationArea = All;
+                                   Caption = 'Create Contract Service Orders';
+                                   RunObject = report "Create Contract Service Orders";
+                               }*/
                 action("Driver Cash Receipt")
                 {
                     ApplicationArea = All;
@@ -237,6 +244,7 @@ page 50005 "Booking Manager Role Center"
                     //roadtax
                     //inspection
                     Caption = 'Taxi Admin';
+
                     action(Taxis2)
                     {
                         ApplicationArea = all;
@@ -265,6 +273,7 @@ page 50005 "Booking Manager Role Center"
                 group("Group1")
                 {
                     Caption = 'Contract Outstanding Payment';
+
                     action("Contract & Group")
                     {
                         ApplicationArea = All;
@@ -283,7 +292,6 @@ page 50005 "Booking Manager Role Center"
                         Caption = 'Contract Outstanding (Driver)';
                         RunObject = page "Contract Gain/Loss (Customers)";
                     }
-
                     action("Responsibility Center")
                     {
                         ApplicationArea = Basic, Suite;
@@ -294,48 +302,49 @@ page 50005 "Booking Manager Role Center"
                 group("Group2")
                 {
                     Caption = 'Reports';
+
                     /*               action("Contract - Salesperson")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Serv. Contract - Salesperson';
-                                       RunObject = report "Serv. Contract - Salesperson";
-                                   }
-                                   action("Contr. GainLoss - Resp. Ctr.")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Contr. Gain/Loss - Resp. Ctr.';
-                                       RunObject = report "Contr. Gain/Loss - Resp. Ctr.";
-                                   }
-                                   action("Contract - Customer")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Service Contract - Customer';
-                                       RunObject = report "Service Contract - Customer";
-                                   }
-                                   action("Maintenance Visit - Planning")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Maintenance Visit - Planning';
-                                       RunObject = report "Maintenance Visit - Planning";
-                                   }
-                                   action("Maintenance Performance")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Maintenance Performance';
-                                       RunObject = report "Maintenance Performance";
-                                   }
-                                   action("Contract GainLoss Entries")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Contract Gain/Loss Entries';
-                                       RunObject = report "Contract Gain/Loss Entries";
-                                   }
-                                   action("Contract Quotes to Be Signed")
-                                   {
-                                       ApplicationArea = All;
-                                       Caption = 'Contract Quotes to Be Signed';
-                                       RunObject = report "Contract Quotes to Be Signed";
-                                   }*/
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Serv. Contract - Salesperson';
+                                                 RunObject = report "Serv. Contract - Salesperson";
+                                             }
+                                             action("Contr. GainLoss - Resp. Ctr.")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Contr. Gain/Loss - Resp. Ctr.';
+                                                 RunObject = report "Contr. Gain/Loss - Resp. Ctr.";
+                                             }
+                                             action("Contract - Customer")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Service Contract - Customer';
+                                                 RunObject = report "Service Contract - Customer";
+                                             }
+                                             action("Maintenance Visit - Planning")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Maintenance Visit - Planning';
+                                                 RunObject = report "Maintenance Visit - Planning";
+                                             }
+                                             action("Maintenance Performance")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Maintenance Performance';
+                                                 RunObject = report "Maintenance Performance";
+                                             }
+                                             action("Contract GainLoss Entries")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Contract Gain/Loss Entries';
+                                                 RunObject = report "Contract Gain/Loss Entries";
+                                             }
+                                             action("Contract Quotes to Be Signed")
+                                             {
+                                                 ApplicationArea = All;
+                                                 Caption = 'Contract Quotes to Be Signed';
+                                                 RunObject = report "Contract Quotes to Be Signed";
+                                             }*/
                     action("Profit (Contracts)")
                     {
                         ApplicationArea = All;
@@ -343,53 +352,47 @@ page 50005 "Booking Manager Role Center"
                         RunObject = report "Service Profit (Contracts)";
                     }
                     /*                    action("Service Items1")
-                                        {
-                                            ApplicationArea = All;
-                                            Caption = 'Service Items';
-                                            RunObject = report "Service Items";
-                                        }
-                                        action("Service Items Out of Warranty")
-                                        {
-                                            ApplicationArea = All;
-                                            Caption = 'Service Items Out of Warranty';
-                                            RunObject = report "Service Items Out of Warranty";
-                                        }
-                                        action("Service Item Line Labels")
-                                        {
-                                            ApplicationArea = All;
-                                            Caption = 'Service Item Line Labels';
-                                            RunObject = report "Service Item Line Labels";
-                                        }*/
+                                                    {
+                                                        ApplicationArea = All;
+                                                        Caption = 'Service Items';
+                                                        RunObject = report "Service Items";
+                                                    }
+                                                    action("Service Items Out of Warranty")
+                                                    {
+                                                        ApplicationArea = All;
+                                                        Caption = 'Service Items Out of Warranty';
+                                                        RunObject = report "Service Items Out of Warranty";
+                                                    }
+                                                    action("Service Item Line Labels")
+                                                    {
+                                                        ApplicationArea = All;
+                                                        Caption = 'Service Item Line Labels';
+                                                        RunObject = report "Service Item Line Labels";
+                                                    }*/
                 }
             }
-
-
             group("Group5")
             {
                 Caption = 'Order Processing';
+
                 action(Taxis4)
                 {
                     ApplicationArea = All;
                     Caption = 'Taxi';
                     RunObject = page "Taxi List";
                 }
-
-
                 action("Customers2")
                 {
                     ApplicationArea = All;
                     Caption = 'Drivers';
                     RunObject = page "Customer List";
                 }
-
                 action("Contracts2")
                 {
                     ApplicationArea = All;
                     Caption = 'Contracts';
                     RunObject = page "Service Contracts";
                 }
-
-
                 action("Admin")
                 {
                     ApplicationArea = All;
@@ -399,6 +402,7 @@ page 50005 "Booking Manager Role Center"
                 group("Group6")
                 {
                     Caption = 'Posted Documents';
+
                     action("Posted Credit Memos")
                     {
                         ApplicationArea = All;
@@ -409,6 +413,7 @@ page 50005 "Booking Manager Role Center"
                 group("Group10")
                 {
                     Caption = 'Setup';
+
                     action("Service Setup")
                     {
                         ApplicationArea = ALl;
@@ -439,7 +444,6 @@ page 50005 "Booking Manager Role Center"
                         caption = 'TIP Master Steps';
                         RunObject = page "TIP Master Steps";
                     }
-
                     action("Car Make")
                     {
                         ApplicationArea = all;
@@ -472,7 +476,5 @@ page 50005 "Booking Manager Role Center"
                 }
             }
         }
-
     }
-
 }
