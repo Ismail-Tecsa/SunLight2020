@@ -1,5 +1,6 @@
 page 50043 "Taxi Ledger Entries"
 {
+
     ApplicationArea = All;
     Caption = 'Taxi Ledger Entries';
     PageType = List;
@@ -69,6 +70,7 @@ page 50043 "Taxi Ledger Entries"
                 {
                     ApplicationArea = All;
                 }
+
                 field("User ID"; Rec."User ID")
                 {
                     ApplicationArea = All;
@@ -88,4 +90,5 @@ page 50043 "Taxi Ledger Entries"
             }
         }
     }
+
 }

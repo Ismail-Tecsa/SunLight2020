@@ -1,8 +1,10 @@
 page 50050 "Collections"
 {
-    PageType = List;
+    PageType = Worksheet;
     ApplicationArea = All;
     UsageCategory = Lists;
+    AutoSplitKey = true;
+    PromotedActionCategories = 'New,Processing';
     SourceTable = "Gen. Journal Line";
     Caption = 'Collections';
 
@@ -10,12 +12,16 @@ page 50050 "Collections"
     //can select from the lines which booking entry for other fees
     //add function to create lines based on date, amount, days.
     //when post update booking entries.
+
     layout
     {
+
         area(Content)
         {
+
             group(Driver)
             {
+
                 Field(CurrDriver; CurrDriver)
                 {
                     ApplicationArea = all;
@@ -39,7 +45,14 @@ page 50050 "Collections"
                             customer.get(driverrec."No.");
                         end;
                     end;
+
+                    trigger OnValidate()
+                    begin
+                        customer.get(CurrDriver);
+                        DriverName := customer.Name;
+                    end;
                 }
+
                 field(DriverName; DriverName)
                 {
                     ApplicationArea = all;
@@ -70,6 +83,7 @@ page 50050 "Collections"
                                 contractrec.get(SearchContract."Contract Type", SearchContract."Contract No.");
                                 contractrec.Mark(true);
                             until SearchContract.next = 0;
+
                         SearchContract.setrange("Driver 1", Customer."No.");
                         if searchcontract.findfirst then
                             repeat
@@ -86,6 +100,7 @@ page 50050 "Collections"
                                     contractrec.Mark(true);
                                 end;
                             until SearchContract.next = 0;
+
                         ContractRec.MarkedOnly(true);
                         ContractList.SetRecord(ContractRec);
                         ContractList.SetTableView(ContractRec);
@@ -99,8 +114,41 @@ page 50050 "Collections"
                             ServContLine.findfirst;
                             taxis.get(ServContLine."Taxi ID");
                             TaxiID := taxis."Taxi ID";
+                            SETRANGE("Journal Template Name", 'CASHRCPT');
+                            setrange("Journal Batch Name", CurrContract);
+                            if count <> 0 then begin
+                                AllowEdit := true;
+                                CalcTotals();
+                            end;
+
                         end;
+
                     end;
+
+                    trigger OnValidate()
+                    var
+                        ContractRec: Record "Service Contract Header";
+                    begin
+                        if CurrContract = '' then begin
+                            AllowEdit := false;
+                            exit;
+                        end;
+
+                        ServContHead.get(ContractRec."Contract Type", ContractRec."Contract No.");
+                        ServContLine.reset;
+                        ServContLine.SetRange("Contract No.", ServContHead."Contract No.");
+                        ServContLine.findfirst;
+                        taxis.get(ServContLine."Taxi ID");
+                        TaxiID := taxis."Taxi ID";
+                        SETRANGE("Journal Template Name", 'CASHRCPT');
+                        setrange("Journal Batch Name", CurrContract);
+                        if count <> 0 then begin
+                            AllowEdit := true;
+                            CalcTotals();
+                        end;
+
+                    end;
+
                 }
                 field(TAXID; TaxiID)
                 {
@@ -109,8 +157,74 @@ page 50050 "Collections"
                     Editable = false;
                 }
             }
+
+            group(Payment)
+            {
+                Caption = 'Payment Calculation Criteria';
+                Field(PDays; PayDay)
+                {
+                    ApplicationArea = all;
+                    Caption = 'No. of Days';
+                    trigger OnValidate()
+
+                    begin
+                        if PayDay <> 0 then begin
+                            PayDate := 0D;
+                            PayAmount := 0;
+                        end;
+                    end;
+                }
+                field(PDate; PayDate)
+                {
+                    ApplicationArea = all;
+                    Caption = 'Up to Date';
+                    trigger OnValidate()
+
+                    begin
+                        if PayDate <> 0D then begin
+                            PayDay := 0;
+                            PayAmount := 0;
+                        end;
+                    end;
+                }
+
+                field(PAmount; PayAmount)
+                {
+                    ApplicationArea = all;
+                    Caption = 'Amount';
+                    trigger OnValidate()
+
+                    begin
+                        if PayAmount <> 0 then begin
+                            PayDate := 0D;
+                            Payday := 0;
+                        end;
+                    end;
+                }
+
+            }
             repeater(General)
             {
+
+                Editable = AllowEdit;
+                Visible = allowedit;
+
+                field("Journal Template Name"; "Journal Template Name")
+                {
+                    ApplicationArea = all;
+                    Visible = false;
+
+                }
+                field("Journal Batch Name"; "Journal Batch Name")
+                {
+                    ApplicationArea = all;
+                    Visible = false;
+
+                }
+                field("Document Date"; "Document Date")
+                {
+                    ApplicationArea = all;
+                }
                 field("Taxi No."; "Taxi No.")
                 {
                     ApplicationArea = all;
@@ -119,8 +233,8 @@ page 50050 "Collections"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Payment Method Code';
-                    Width = 10;
 
+                    Width = 10;
                     trigger OnValidate()
                     begin
                         PayMeth := "Payment Method Code";
@@ -134,6 +248,7 @@ page 50050 "Collections"
                                 VALIDATE("Bal. Account Type", "Bal. Account Type"::"Bank Account")
                             ELSE
                                 VALIDATE("Bal. Account Type", "Bal. Account Type"::"G/L Account");
+
                             "Bal. Account No." := PaymentMethod."Bal. Account No.";
                         end;
                     end;
@@ -141,9 +256,12 @@ page 50050 "Collections"
                     trigger OnLookup(var Text: Text): Boolean
                     begin
                         CLEAR(PayMethPage);
+
                         PaymentMethod.RESET;
+
                         PayMethPage.LOOKUPMODE := TRUE;
                         PayMethPage.SETTABLEVIEW(PaymentMethod);
+
                         IF PayMethPage.RUNMODAL = ACTION::LookupOK THEN BEGIN
                             PayMethPage.GETRECORD(PaymentMethod);
                             Text := FORMAT(PaymentMethod.Code);
@@ -151,65 +269,106 @@ page 50050 "Collections"
                             //  VALIDATE("Payment Method Code",PaymentMethod.Code);
                         END;
                     end;
+
                 }
                 field("External Document No."; "External Document No.")
                 {
                     ApplicationArea = All;
                     ToolTip = 'External Document No.';
                     width = 10;
+
                 }
-                field("Credit Amount"; "Credit Amount")
+                field("Amount"; "Amount")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Credit Amount';
+                    ToolTip = 'Amount';
                     width = 6;
-
                     trigger OnValidate();
                     begin
+
+
                     end;
                 }
+
             }
+
             group("Details")
             {
-                group("Overdue Days")
+                ShowCaption = false;
+                group("Total Days")
                 {
-                    field(OverDueDays; OverDueDays)
+                    ShowCaption = false;
+                    field(TotalDays; TotalDays)
                     {
                         ApplicationArea = Basic, Suite;
                         Editable = false;
-                        Caption = 'Overdue Days';
-                        ToolTip = 'Specifies overdue days';
+                        Caption = 'Total Days';
+                        ToolTip = 'Specifies total days';
                     }
                 }
-                group("Overdue Amount")
+
+                group("Total Amount")
                 {
-                    field(OverDueAmount; OverDueAmount)
+                    ShowCaption = false;
+                    field(TotalAmount; TotalAmount)
                     {
                         ApplicationArea = Basic, Suite;
                         Editable = false;
-                        Caption = 'Overdue Amount';
+                        Caption = 'Total Amount';
+
                         ToolTip = 'Amount';
                     }
                 }
+
             }
         }
+
         area(FactBoxes)
         {
             part(OwnerFactbox; "Owner Details FactBox")
             {
                 ApplicationArea = all;
                 SubPageLink = "Taxi ID" = field("Taxi No.");
+
             }
+
             part("Taxi Details"; "Taxi Details FactBox")
             {
                 ApplicationArea = all;
                 SubPageLink = "Taxi ID" = field("Taxi No.");
+
             }
         }
     }
+    actions
+    {
+        area(Processing)
+        {
+            action("Calculate")
+            {
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                ApplicationArea = all;
+
+                trigger OnAction()
+                begin
+
+                    GetBatchNo(CurrContract);
+                    SubCabMgmt.CalculatePayment(g_BatchName, CurrContract, PayAmount, payday, PayDate);
+                    AllowEdit := true;
+                    CalcTotals();
+                end;
+            }
+        }
+
+    }
+
     trigger OnOpenPage();
     begin
         usersetup.get(userid);
+        AllowEdit := false;
+        setrange("Journal Template Name", 'CASHRCPT');
     end;
 
     trigger OnNewRecord(BelowxRec: Boolean);
@@ -223,7 +382,9 @@ page 50050 "Collections"
 
     local procedure UpdateBalance();
     begin
-        GenJnlManagement.CalcBalance(Rec, xRec, Balance, TotalBalance, ShowBalance, ShowTotalBalance);
+        CalcTotals();
+        GenJnlManagement.CalcBalance(
+        Rec, xRec, Balance, TotalBalance, ShowBalance, ShowTotalBalance);
         BalanceVisible := ShowBalance;
         TotalBalanceVisible := ShowTotalBalance;
     end;
@@ -236,7 +397,8 @@ page 50050 "Collections"
         if (FINDSET()) and ("Applies-to Ext. Doc. No." <> '') then begin
             g_BatchName := "Applies-to Ext. Doc. No.";
             "Posting Date" := WORKDATE();
-            if "Document No." = '' then "Document No." := COPYSTR(USERID, 1, 20);
+            if "Document No." = '' then
+                "Document No." := COPYSTR(USERID, 1, 20);
             MODIFY();
             //  _DocNo := "Document No.";
             CODEUNIT.RUN(CODEUNIT::"Gen. Jnl.-Post", Rec);
@@ -253,6 +415,7 @@ page 50050 "Collections"
             if CLE.FINDLAST() then begin
                 cle.setrange("Document no.", cle."Document No.");
                 cle.findfirst();
+
                 //    REPORT.RUNMODAL(50006,TRUE,FALSE,CLE);
                 //     IF CONFIRM('Do you wish to print the receipt?',TRUE) THEN
                 REPORT.RUNMODAL(50006, true, false, CLE);
@@ -262,31 +425,50 @@ page 50050 "Collections"
 
     local procedure EnableApplyEntriesAction();
     begin
-        ApplyEntriesActionEnabled := ("Account Type" in ["Account Type"::Customer, "Account Type"::Vendor]) or ("Bal. Account Type" in ["Bal. Account Type"::Customer, "Bal. Account Type"::Vendor]);
+        ApplyEntriesActionEnabled :=
+          ("Account Type" in ["Account Type"::Customer, "Account Type"::Vendor]) or
+          ("Bal. Account Type" in ["Bal. Account Type"::Customer, "Bal. Account Type"::Vendor]);
     end;
 
-    procedure GetBatchNo(_BatchName: Code[10];
-    _CustNo: Code[10];
-    _OverDueDays: Decimal;
-    _OverDueAmount: Decimal)
+    procedure GetBatchNo(_BatchName: Code[10])
     begin
-        OverDueDays := _OverDueDays;
-        OverDueAmount := _OverDueAmount;
+
         if not GenJnlBatch.GET('CASHRCPT', _BatchName) then begin
             GenJnlBatch."Journal Template Name" := 'CASHRCPT';
             GenJnlBatch.Name := _BatchName;
             GenJnlBatch."Bal. Account Type" := GenJnlBatch."Bal. Account Type"::"Bank Account";
             GenJnlBatch."Posting No. Series" := 'GJNL-PCR';
-            GenJnlBatch."No. Series" := ''; //'GJNL-RCPT';
+            GenJnlBatch."No. Series" := '';//'GJNL-RCPT';
             GenJnlBatch.INSERT();
+            commit;
         end;
+
         RESET();
-        CustNo := _CustNo;
         g_BatchName := _BatchName;
-        CurrentJnlBatchName := g_BatchName; //"Journal Batch Name";
+        CurrentJnlBatchName := g_BatchName;//"Journal Batch Name";
         SETRANGE("Journal Template Name", 'CASHRCPT');
+        setrange("Journal Batch Name", g_BatchName);
+        if count <> 0 then begin
+            if confirm('Do you wish to recalculate and remove the existing lines?') then begin
+                deleteall;
+            end;
+        end;
+        CurrPage.Update();
         GenJnlManagement.OpenJnl(CurrentJnlBatchName, Rec);
-        SetControlAppearanceFromBatch();
+        //        SetControlAppearanceFromBatch();
+    end;
+
+    local procedure CalcTotals();
+    var
+        l_GJL: Record "Gen. Journal Line";
+    begin
+        l_gjl.reset;
+        l_gjl.setrange("Journal Template Name", 'CASHRCPT');
+        l_gjl.SetRange("Journal Batch Name", CurrContract);
+        l_gjl.CalcSums(amount);
+        Totalamount := l_gjl.Amount;
+        TotalDays := l_gjl.count;
+        CurrPage.update;
     end;
 
     local procedure SetControlAppearanceFromBatch();
@@ -299,10 +481,15 @@ page 50050 "Collections"
         if ("Journal Template Name" <> '') and ("Journal Batch Name" <> '') then
             GenJournalBatch.GET("Journal Template Name", "Journal Batch Name")
         else
-            if not GenJournalBatch.GET(GETRANGEMAX("Journal Template Name"), CurrentJnlBatchName) then exit;
+            if not GenJournalBatch.GET(GETRANGEMAX("Journal Template Name"), CurrentJnlBatchName) then
+                exit;
+
         CheckOpenApprovalEntries(GenJournalBatch.RECORDID);
+
         CanCancelApprovalForJnlBatch := ApprovalsMgmt.CanCancelApprovalForRecord(GenJournalBatch.RECORDID);
-        WorkflowWebhookManagement.GetCanRequestAndCanCancelJournalBatch(GenJournalBatch, CanRequestFlowApprovalForBatch, CanCancelFlowApprovalForBatch, CanRequestFlowApprovalForAllLines);
+
+        WorkflowWebhookManagement.GetCanRequestAndCanCancelJournalBatch(
+          GenJournalBatch, CanRequestFlowApprovalForBatch, CanCancelFlowApprovalForBatch, CanRequestFlowApprovalForAllLines);
         CanRequestFlowApprovalForBatchAndAllLines := CanRequestFlowApprovalForBatch and CanRequestFlowApprovalForAllLines;
     end;
 
@@ -311,17 +498,28 @@ page 50050 "Collections"
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
     begin
         OpenApprovalEntriesExistForCurrUserBatch := ApprovalsMgmt.HasOpenApprovalEntriesForCurrentUser(BatchRecordId);
+
         OpenApprovalEntriesOnJnlBatchExist := ApprovalsMgmt.HasOpenApprovalEntries(BatchRecordId);
-        OpenApprovalEntriesOnBatchOrAnyJnlLineExist := OpenApprovalEntriesOnJnlBatchExist or ApprovalsMgmt.HasAnyOpenJournalLineApprovalEntries("Journal Template Name", "Journal Batch Name");
+
+        OpenApprovalEntriesOnBatchOrAnyJnlLineExist :=
+          OpenApprovalEntriesOnJnlBatchExist or
+          ApprovalsMgmt.HasAnyOpenJournalLineApprovalEntries("Journal Template Name", "Journal Batch Name");
     end;
+
 
     var
         PaymentMethod: Record "Payment Method";
+        PayDay: Integer;
+        AllowEdit: Boolean;
+        PayDate: Date;
+        PayAmount: Decimal;
         DriverName: text[50];
         TaxiID: code[10];
         taxis: record taxis;
         ServContHead: record "Service Contract Header";
         ServContLine: record "Service COntract Line";
+        SubCabMgmt: codeunit "SunCab Journal Management";
+
         CurrDriver: code[20];
         Customer: record customer;
         CurrContract: code[10];
@@ -343,7 +541,9 @@ page 50050 "Collections"
         OpenApprovalEntriesOnJnlLineExist: Boolean;
         g_BatchName: Code[20];
         OverDueDays: Integer;
+        TotalDays: Integer;
         OverDueAmount: decimal;
+        Totalamount: decimal;
         AccName: Text[100];
         BalAccName: Text[100];
         Balance: Decimal;

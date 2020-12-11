@@ -1,27 +1,29 @@
 page 50018 "Car Model"
 {
-  ApplicationArea = All;
-  Caption = 'Car Model';
-  PageType = List;
-  SourceTable = "Car Model";
-  UsageCategory = Lists;
-  Editable = true;
 
-  layout
-  {
-    area(content)
+    ApplicationArea = All;
+    Caption = 'Car Model';
+    PageType = List;
+    SourceTable = "Car Model";
+    UsageCategory = Lists;
+    Editable = true;
+
+    layout
     {
-      repeater(General)
-      {
-        field(Code;Rec.Code)
+        area(content)
         {
-          ApplicationArea = All;
+            repeater(General)
+            {
+                field(Code; Rec.Code)
+                {
+                    ApplicationArea = All;
+                }
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
-        field(Description;Rec.Description)
-        {
-          ApplicationArea = All;
-        }
-      }
     }
-  }
+
 }

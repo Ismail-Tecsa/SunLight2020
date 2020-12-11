@@ -1,27 +1,29 @@
 page 50019 "Car Make"
 {
-  ApplicationArea = All;
-  Caption = 'Car Make';
-  PageType = List;
-  SourceTable = "Car Make";
-  UsageCategory = Lists;
-  Editable = true;
 
-  layout
-  {
-    area(content)
+    ApplicationArea = All;
+    Caption = 'Car Make';
+    PageType = List;
+    SourceTable = "Car Make";
+    UsageCategory = Lists;
+    Editable = true;
+
+    layout
     {
-      repeater(General)
-      {
-        field(Code;Rec.Code)
+        area(content)
         {
-          ApplicationArea = All;
+            repeater(General)
+            {
+                field(Code; Rec.Code)
+                {
+                    ApplicationArea = All;
+                }
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
-        field(Description;Rec.Description)
-        {
-          ApplicationArea = All;
-        }
-      }
     }
-  }
+
 }

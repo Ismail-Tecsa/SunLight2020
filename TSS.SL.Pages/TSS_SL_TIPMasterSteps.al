@@ -1,31 +1,33 @@
 page 50017 "TIP Master Steps"
 {
-  ApplicationArea = All;
-  Caption = 'TIP Master Steps';
-  PageType = List;
-  SourceTable = "TIP Master Setup";
-  UsageCategory = Administration;
-  editable = true;
 
-  layout
-  {
-    area(content)
+    ApplicationArea = All;
+    Caption = 'TIP Master Steps';
+    PageType = List;
+    SourceTable = "TIP Master Setup";
+    UsageCategory = Administration;
+    editable = true;
+
+    layout
     {
-      repeater(General)
-      {
-        field("Step No.";Rec."Step No.")
+        area(content)
         {
-          ApplicationArea = All;
+            repeater(General)
+            {
+                field("Step No."; Rec."Step No.")
+                {
+                    ApplicationArea = All;
+                }
+                field(Description; Rec.Description)
+                {
+                    ApplicationArea = All;
+                }
+                field("Permit Change Locked"; Rec."Permit Change Locked")
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
-        field(Description;Rec.Description)
-        {
-          ApplicationArea = All;
-        }
-        field("Permit Change Locked";Rec."Permit Change Locked")
-        {
-          ApplicationArea = All;
-        }
-      }
     }
-  }
+
 }

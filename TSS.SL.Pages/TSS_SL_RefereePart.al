@@ -8,10 +8,7 @@ page 50008 "Referee Subform"
     PageType = ListPart;
     SourceTable = "Driver Referees";
 
-
     layout
-
-
     {
         area(content)
         {
@@ -31,6 +28,8 @@ page 50008 "Referee Subform"
                     begin
                         if not contact.get("Contact No.") then clear(contact);
                         ContactName := contact.Name;
+                        ContactMobileNo := Contact."Mobile Phone No."; //TSA_ISMAIL Added Contact Mobile No
+                        ContactRelative := Contact.Relationship; //TSA_ISMAIL Added Contact Relationship
                     end;
                 }
                 field("Name"; ContactName)

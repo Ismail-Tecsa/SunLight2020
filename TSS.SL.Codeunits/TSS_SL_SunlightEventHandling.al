@@ -59,6 +59,7 @@ codeunit 50000 "Sunlight Event Handling"
         TempGLEntryBuf."TIP Step" := GenJournalLine."TIP Step";
         TempGLEntryBuf."Driver No." := GenJournalLine."Driver No.";
         tempglentrybuf."Insurance Policy" := GenJournalLine."Insurance Policy";
+        TempGLEntryBuf."Contract No." := GenJournalLine."Contract No.";//TSA_ISMAIL
         TempGLEntryBuf."Insurance Vendor No." := GenJournalLine."Insurance Vendor No.";//TSA_ISMAIL
     end;
 
@@ -120,4 +121,24 @@ codeunit 50000 "Sunlight Event Handling"
         Rec."Expiration Date" := CalcDate('1Y', Rec."effective Date")
     End;
     //TSA_ISMAIL Expiration date
+    /*[EventSubscriber(ObjectType::Table, 50015, 'OnAfterValidateEvent', 'Taxi ID', false, False)]
+    local procedure "OnAfterValidateTaxiID"(var Rec: Record Case)
+    var
+        taxis: record taxis;
+        CMAcc: record "CM Accident";
+        Insurance: Record Insurance;
+    Begin
+        If rec.Type = rec.Type::Accident then
+            taxis.SetRange("Taxi ID", rec."Taxi ID");
+        if taxis.FindSet() then
+            Insurance.Reset();
+        Insurance.SetRange("Taxi No.", taxis."Taxi ID");
+        If Insurance.FindLast() then begin
+            cmacc."Insurance Category" := Insurance."Insurance Type";
+            CMAcc."Insurance No." := Insurance."No.";
+            Message('%1', CMAcc."Insurance No.");
+            Message('%1', CMAcc."Insurance Category");
+            CmAcc.Modify();
+        end;
+    End;*/
 }

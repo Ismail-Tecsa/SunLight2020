@@ -30,7 +30,7 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
             Caption = 'Taxi No.';
             TableRelation = Taxis;
             DataClassification = CustomerContent;
-
+            //TSA_ISMAIL Added contract and driver to flow when user select Item
             trigger OnValidate()
             var
                 driver: record customer;
@@ -38,13 +38,16 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
                 ContractLine: record "Service Contract Line";
             begin
                 if taxi.get("Taxi No.") then begin
-                    ContractLine.reset;
-                    ContractLine.setrange("Service Item No.", "Taxi No.");
+                    ContractLine.Reset();
+                    ContractLine.setrange("Taxi ID", "Taxi No.");
                     if ContractLine.FindLast() then begin
-                        validate("Driver No.", ContractLine."Customer No.");
+                        validate("Contract No.", ContractLine."Contract No.");
+                        Validate("Driver No.", ContractLine."Customer No.");
+                        //   Message('%1', "Driver No.");
                     end;
                 end;
             end;
+            //TSA_ISMAIL Added contract and driver to flow when user select Item
         }
         field(50003; "Driver No."; Code[20])
         {
@@ -118,6 +121,13 @@ tableextension 50009 "Insurance Extension" extends "Insurance"
         {
             Caption = 'Excess Amount';
             DataClassification = CustomerContent;
+        }
+        //TSA_ISMAIL added Contract 
+        field(50020; "Contract No."; code[20])
+        {
+            Caption = 'Contract No.';
+            //TableRelation = "Service Contract Header";
+            // DataClassification = CustomerContent;
         }
     }
 }

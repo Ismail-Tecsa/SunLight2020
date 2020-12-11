@@ -2,11 +2,13 @@ tableextension 50005 "G/LEntry Extension" extends "G/L Entry"
 {
     fields
     {
+
         field(50000; "Contract No."; Code[20])
         {
             Caption = 'Contract No.';
             DataClassification = ToBeClassified;
             TableRelation = "Service Contract Header";
+
         }
         field(50001; "Taxi No."; Code[20])
         {

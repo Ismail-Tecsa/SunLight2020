@@ -1,28 +1,30 @@
 table 50027 "Settlement Code"
 {
-  Caption = 'Settlement Code';
-  DataClassification = ToBeClassified;
-  LookupPageId = "Settlement Code List";
-  DrillDownPageId = "Settlement Code List";
+    Caption = 'Settlement Code';
+    DataClassification = ToBeClassified;
+    LookupPageId = "Settlement Code List";
+    DrillDownPageId = "Settlement Code List";
 
-  fields
-  {
-    field(1;Code;Code[10])
+    fields
     {
-      Caption = 'Code';
-      DataClassification = ToBeClassified;
+        field(1; Code; Code[10])
+        {
+            Caption = 'Code';
+            DataClassification = ToBeClassified;
+        }
+        field(2; Description; Text[50])
+        {
+            Caption = 'Description';
+            DataClassification = ToBeClassified;
+        }
+
     }
-    field(2;Description;Text[50])
+    keys
     {
-      Caption = 'Description';
-      DataClassification = ToBeClassified;
+        key(PK; Code)
+        {
+            Clustered = true;
+        }
     }
-  }
-  keys
-  {
-    key(PK;Code)
-    {
-      Clustered = true;
-    }
-  }
+
 }

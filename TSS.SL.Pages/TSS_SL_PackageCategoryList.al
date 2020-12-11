@@ -1,30 +1,33 @@
 page 50001 "Package Category List"
 {
-  ApplicationArea = All;
-  Caption = 'Package Category List';
-  PageType = List;
-  SourceTable = "Package Category";
-  UsageCategory = Tasks;
 
-  layout
-  {
-    area(content)
+    ApplicationArea = All;
+    Caption = 'Package Category List';
+    PageType = List;
+    SourceTable = "Package Category";
+    UsageCategory = Tasks;
+
+    layout
     {
-      repeater(General)
-      {
-        field(Code;Rec.Code)
+        area(content)
         {
-          ApplicationArea = All;
+            repeater(General)
+            {
+                field(Code; Rec.Code)
+                {
+                    ApplicationArea = All;
+                }
+                field("Discount Bonus Day"; Rec."Discount Bonus Day")
+                {
+                    ApplicationArea = All;
+                }
+
+                field(Penalty; Rec.Penalty)
+                {
+                    ApplicationArea = All;
+                }
+            }
         }
-        field("Discount Bonus Day";Rec."Discount Bonus Day")
-        {
-          ApplicationArea = All;
-        }
-        field(Penalty;Rec.Penalty)
-        {
-          ApplicationArea = All;
-        }
-      }
     }
-  }
+
 }

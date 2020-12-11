@@ -29,4 +29,5 @@ table 50009 "TIP Master Setup"
             Clustered = true;
         }
     }
+
 }

@@ -101,6 +101,18 @@ table 50018 "CM Lost Document"
             Caption = 'Remark';
             DataClassification = CustomerContent;
         }
+        //TSA_ISAMIL added field
+        field(20; "Receipt Amount"; Decimal)
+        {
+            Caption = 'Receipt Amount';
+            DataClassification = ToBeClassified;
+        }
+        field(21; "Receipt Amount Date"; Date)
+        {
+            Caption = 'Receipt Amount Date';
+            DataClassification = ToBeClassified;
+        }
+        //TSA_ISMAIL added field
     }
     keys
     {
@@ -109,4 +121,5 @@ table 50018 "CM Lost Document"
             Clustered = true;
         }
     }
+
 }

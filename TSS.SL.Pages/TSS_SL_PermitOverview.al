@@ -1,5 +1,6 @@
 page 50016 "Permit Overview"
 {
+
     ApplicationArea = All;
     Caption = 'Permit Overview';
     PageType = List;
@@ -40,4 +41,5 @@ page 50016 "Permit Overview"
             }
         }
     }
+
 }

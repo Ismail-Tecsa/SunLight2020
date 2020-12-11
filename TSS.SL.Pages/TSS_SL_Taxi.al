@@ -15,18 +15,25 @@ page 50104 Taxis
                 field("Taxi ID"; "Taxi ID")
                 {
                     ApplicationArea = All;
+
                 }
                 field("Taxi Plate"; "Taxi Plate")
                 {
                     ApplicationArea = All;
+
                 }
+
                 field(Company; "Company")
                 {
                     ApplicationArea = All;
+
                 }
+
+
                 field(URL; "URL")
                 {
                     ApplicationArea = All;
+
                 }
                 field(Status; Status)
                 {
@@ -76,6 +83,7 @@ page 50104 Taxis
                 {
                     ApplicationArea = All;
                 }
+
                 field("Meter TR1"; Rec."Meter TR1")
                 {
                     ApplicationArea = All;
@@ -88,6 +96,8 @@ page 50104 Taxis
                 {
                     ApplicationArea = All;
                 }
+
+
                 field("NGV Cert. Ref."; Rec."NGV Cert. Ref.")
                 {
                     ApplicationArea = All;
@@ -107,18 +117,22 @@ page 50104 Taxis
             }
             group("Custom Exemption")
             {
+
                 field("Custom Exemption Submit Date"; Rec."Custom Exemption Submit Date")
                 {
                     ApplicationArea = All;
                 }
+
                 field("Custom Exemption Return Date"; Rec."Custom Exemption Return Date")
                 {
                     ApplicationArea = All;
                 }
+
                 field("K1 Receive Date"; Rec."K1 Receive Date")
                 {
                     ApplicationArea = All;
                 }
+
                 field("Sales Letter Receive Date"; Rec."Sales Letter Receive Date")
                 {
                     ApplicationArea = All;
@@ -153,6 +167,7 @@ page 50104 Taxis
             }
             group("JPJ Registration")
             {
+
                 field("JPJ Submission Date"; Rec."JPJ Submission Date")
                 {
                     ApplicationArea = All;
@@ -164,6 +179,7 @@ page 50104 Taxis
             }
             group("Geran")
             {
+
                 field("Car Make"; Rec."Car Make")
                 {
                     ApplicationArea = All;
@@ -199,6 +215,7 @@ page 50104 Taxis
             }
             group("Spec - Fixed Permit")
             {
+
                 field("Yellow Card"; Rec."Yellow Card")
                 {
                     ApplicationArea = All;
@@ -213,6 +230,7 @@ page 50104 Taxis
                 {
                     ApplicationArea = All;
                     Importance = Standard;
+
                 }
             }
             group("Insurance")
@@ -248,7 +266,10 @@ page 50104 Taxis
                 {
                     ApplicationArea = All;
                 }
+
             }
+
+
             part("Taxi in Progress"; "TIP Steps Subform")
             {
                 ApplicationArea = all;
@@ -257,8 +278,10 @@ page 50104 Taxis
                 UpdatePropagation = Both;
             }
         }
+
         area(factboxes)
         {
+
             part("Owner Details"; "Owner Details FactBox")
             {
                 ApplicationArea = all;
@@ -268,7 +291,8 @@ page 50104 Taxis
             {
                 ApplicationArea = All;
                 Caption = 'Attachments';
-                SubPageLink = "Table ID" = CONST(50000), "No." = FIELD("Taxi ID");
+                SubPageLink = "Table ID" = CONST(50000),
+                               "No." = FIELD("Taxi ID");
             }
             systempart(Control1905767507; Notes)
             {
@@ -276,6 +300,7 @@ page 50104 Taxis
             }
         }
     }
+
     actions
     {
         area(Processing)
@@ -291,13 +316,14 @@ page 50104 Taxis
             {
                 ApplicationArea = all;
                 Caption = 'Create Service Item';
-
                 trigger OnAction()
                 var
                     servitem: Record "Service Item";
                     servitemgrp: Record "Service Item Group";
                 begin
-                    if servitem.get("Taxi ID") then error('Service Item already exists');
+                    if servitem.get("Taxi ID") then
+                        error('Service Item already exists');
+
                     clear(servitem);
                     servitem.init;
                     servitem."No." := "Taxi ID";
@@ -309,6 +335,7 @@ page 50104 Taxis
                 end;
             }
         }
+
         area(Navigation)
         {
             action("Ledger Entry")
@@ -327,7 +354,10 @@ page 50104 Taxis
                 ToolTip = 'View the history of transactions that have been posted for the selected record.';
             }
         }
+
     }
+
     var
         myInt: Integer;
 }
+

@@ -66,6 +66,7 @@ tableextension 50004 "Gen. Journal Line Extension" extends "Gen. Journal Line"
                     "Taxi No." := Insurance."Taxi No.";
                     "Annual Premium" := Insurance."Annual Premium";
                     "Insurance Vendor No." := Insurance."Insurance Vendor No.";
+                    "Contract No." := Insurance."Contract No.";
                 end;
             End;
             //Tsa_ISMAIL Modified code 

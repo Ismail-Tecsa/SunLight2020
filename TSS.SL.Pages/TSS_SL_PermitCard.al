@@ -87,6 +87,7 @@ page 50013 "Permit Card"
                 field("Permit Cancellation Date"; "Permit Cancellation Date")
                 {
                     ApplicationArea = all;
+                    Editable = false;//TSA_ISAMIL
                 }
                 field("Pre –SK Submission"; "Pre –SK Submission")
                 {
@@ -277,7 +278,7 @@ page 50013 "Permit Card"
         If CasePG10.FindSet() then
             "Permit Cancellation Date" := CasePG10."Permit Cancellation Date";
         Modify();
-        Message('%1', "Permit Cancellation Date");
+        //Message('%1', "Permit Cancellation Date");
     end;
     //TSA_ISMAIL Permit Cancellation Date auto fill
 }

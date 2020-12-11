@@ -1,5 +1,6 @@
 page 50045 "Pass Card List"
 {
+
     ApplicationArea = All;
     Caption = 'Pass Card List';
     PageType = List;
@@ -29,11 +30,17 @@ page 50045 "Pass Card List"
                 {
                     ApplicationArea = All;
                 }
+                field("Start Date"; Rec."Start Date")
+                {
+                    ApplicationArea = All;
+                }
                 field("Expiry Date"; Rec."Expiry Date")
                 {
                     ApplicationArea = All;
                 }
+
             }
         }
     }
+
 }

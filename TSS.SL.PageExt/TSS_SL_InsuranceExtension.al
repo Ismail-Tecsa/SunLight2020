@@ -66,9 +66,16 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
             {
                 ApplicationArea = All;
             }
+            //TSA_ISAMIL added contract No.
+            field("Contract No."; "Contract No.")
+            {
+                ApplicationArea = all;
+            }
+
             field("Driver No.37274"; "Driver No.")
             {
                 ApplicationArea = All;
+                //Visible = false; //TSA_ISMAIL modified
             }
         }
         /*         addafter("Policy No.")
@@ -131,11 +138,21 @@ pageextension 50010 "Insurance Extension" extends "Insurance Card"
         }
         addlast(factboxes)
         {
-            part("Driver Details"; "Driver Details FactBox")
+            /*part("Driver Details"; "Driver Details FactBox")
             {
                 ApplicationArea = all;
                 SubPageLink = "No." = field("Driver No.");
+            }*/   //TSA_ISMAIL blocked Code
+
+            //TSA_ISMAIL added factboxes
+            part(DriverFactbox; "Owner Details FactBox")
+            {
+                ApplicationArea = Basic, Suite;
+                SubPageLink = "Taxi ID" = FIELD("Taxi No.");
+                Visible = true;
             }
+            //TSA_ISMAIL added factboxes
+
             part("Package Details"; "Taxi Details FactBox")
             {
                 ApplicationArea = all;
